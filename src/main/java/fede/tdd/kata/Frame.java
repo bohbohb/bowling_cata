@@ -55,19 +55,19 @@ public class Frame {
         return _isStrike;
     }
 
-    private void setMaxPinsForNextRoll() {
-        maxPins = maxPins - _firstRoll;
-    }
-
-    private int getValidScore(int i) {
-        return Math.max(Math.min(maxPins, i), MIN_PINS_PER_ROLL);
-    }
-
     public int getSpareBonus() {
         return _firstRoll == null ? 0 : _firstRoll;
     }
 
     public int getStrikeBonus() {
         return getScore();
+    }
+
+    private void setMaxPinsForNextRoll() {
+        maxPins = maxPins - _firstRoll;
+    }
+
+    private int getValidScore(int i) {
+        return Math.max(Math.min(maxPins, i), MIN_PINS_PER_ROLL);
     }
 }

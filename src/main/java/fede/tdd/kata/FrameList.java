@@ -2,7 +2,6 @@ package fede.tdd.kata;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FrameList {
 
@@ -26,6 +25,30 @@ public class FrameList {
         currentFrame.roll(i);
     }
 
+    public int getScore() {
+        int score = 0;
+        int frameSize = _frames.size();
+        Frame frame;
+        for (int index = 0; index < frameSize; index++) {
+            frame = _frames.get(index);
+            score = getBonusScore(score, frame, index);
+            score += frame.getScore();
+        }
+        return score;
+    }
+
+    private int getBonusScore(int score, Frame frame, int index) {
+        if(index + 1 < _frames.size()) {
+            if (frame.isSpare()) {
+                score += _frames.get(index + 1).getSpareBonus();
+            }
+            if (frame.isStrike()) {
+                score += _frames.get(index + 1).getStrikeBonus();
+            }
+        }
+        return score;
+    }
+
     private Frame getCurrentFrame() {
         if (_currentFrameIndex > 9 || _frames.get(_currentFrameIndex) == null) {
             return null;
@@ -36,23 +59,5 @@ public class FrameList {
             return getCurrentFrame();
         }
         return currentFrame;
-    }
-
-    public int getScore() {
-//        return _frames.stream().collect(Collectors.summingInt(Frame::getScore));
-        int score = 0;
-        int frameSize = _frames.size();
-        Frame frame;
-        for (int index = 0; index < frameSize; index++) {
-            frame = _frames.get(index);
-            if(frame.isSpare() && index + 1 < frameSize) {
-                score += _frames.get(index+1).getSpareBonus();
-            }
-            if(frame.isStrike() && index + 1 < frameSize) {
-                score += _frames.get(index+1).getStrikeBonus();
-            }
-            score += frame.getScore();
-        }
-        return score;
     }
 }

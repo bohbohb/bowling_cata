@@ -37,9 +37,9 @@ class GameTest {
     @Test
     void summedPinRoll() {
         Game game = new Game();
-        game.roll(1);
 
-        game.roll(4);
+        rollsArray(game, new int[] {1, 4});
+
 
         assertThat(game.score(), is(5));
     }
@@ -47,9 +47,9 @@ class GameTest {
     @Test
     void summedGreaterThan10PinRollInAFrame() {
         Game game = new Game();
-        game.roll(4);
 
-        game.roll(8);
+        rollsArray(game, new int[] {4, 8});
+
 
         assertThat(game.score(), is(10));
     }
@@ -57,10 +57,9 @@ class GameTest {
     @Test
     void sumFrameAndRoll() {
         Game game = new Game();
-        game.roll(1);
-        game.roll(4);
 
-        game.roll(4);
+        rollsArray(game, new int[] {1, 4, 4});
+
 
         assertThat(game.score(), is(9));
     }
@@ -68,11 +67,9 @@ class GameTest {
     @Test
     void sumTwoFrames() {
         Game game = new Game();
-        game.roll(1);
-        game.roll(4);
-        game.roll(4);
 
-        game.roll(5);
+        rollsArray(game, new int[] {1, 4, 4, 5});
+
 
         assertThat(game.score(), is(14));
     }
@@ -80,11 +77,8 @@ class GameTest {
     @Test
     void lastFrameSpare() {
         Game game = new Game();
-        game.roll(1);
-        game.roll(4);
-        game.roll(5);
 
-        game.roll(5);
+        rollsArray(game, new int[] {1, 4, 5, 5});
 
         assertThat(game.score(), is(15));
     }
@@ -92,12 +86,8 @@ class GameTest {
     @Test
     void computeBonusPointsSpare(){
         Game game = new Game();
-        game.roll(1);
-        game.roll(4);
-        game.roll(4);
-        game.roll(6);
 
-        game.roll(5);
+        rollsArray(game, new int[] {1, 4, 4, 6, 5});
 
         assertThat(game.score(), is(25));
     }
@@ -105,10 +95,8 @@ class GameTest {
     @Test
     void lastFrameStrike() {
         Game game = new Game();
-        game.roll(1);
-        game.roll(4);
 
-        game.roll(10);
+        rollsArray(game, new int[] {1, 4, 10});
 
         assertThat(game.score(), is(15));
     }
@@ -116,11 +104,8 @@ class GameTest {
     @Test
     void computeBonusPointsStrikePartialFrame(){
         Game game = new Game();
-        game.roll(1);
-        game.roll(4);
-        game.roll(10);
 
-        game.roll(2);
+        rollsArray(game, new int[] {1, 4, 10, 2});
 
         assertThat(game.score(), is(19));
     }
@@ -128,13 +113,34 @@ class GameTest {
     @Test
     void computeBonusPointsStrike(){
         Game game = new Game();
-        game.roll(1);
-        game.roll(4);
-        game.roll(10);
-        game.roll(2);
 
-        game.roll(4);
+        rollsArray(game, new int[] {1, 4, 10, 2, 4});
 
         assertThat(game.score(), is(27));
+    }
+
+
+    @Test
+    void doubleSpareBonuses(){
+        Game game = new Game();
+
+        rollsArray(game, new int[] {1, 9, 2, 8, 5, 1});
+
+        assertThat(game.score(), is(33));
+    }
+
+    @Test
+    void doubleSparePlusStrikeBonuses(){
+        Game game = new Game();
+
+        rollsArray(game, new int[] {1, 9, 2, 8, 10, 0, 1});
+
+        assertThat(game.score(), is(44));
+    }
+
+    private void rollsArray(Game game, int[] rolls) {
+        for (int pins: rolls) {
+            game.roll(pins);
+        }
     }
 }
