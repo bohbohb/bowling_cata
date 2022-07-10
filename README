@@ -1,2 +1,124 @@
 bowling game kata exercise reference:
 http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata
+
+REQUIREMENTS:
+- The game consists of 10 frames.
+- In each frame the player can knock down 10 pins at most. The score for the frame is the total
+number of pins knocked down, plus bonuses for strikes and spares.
+
+- A spare is when the player knocks down all 10 pins in two tries.  The bonus for
+that frame is the number of pins knocked down by the next roll.
+
+- A strike is when the player knocks down all 10 pins on his first try.  The bonus
+for that frame is the value of the next two balls rolled.
+
+- In the tenth frame a player who rolls a spare or strike is allowed to roll the extra
+balls to complete the frame.  However no more than three balls can be rolled in
+tenth frame.
+
+
+CARD 1:
+SCENARIOS
+
+roll(pins : int) is called each time the player rolls a ball.  The argument is the number of pins knocked down.
+score() : int is called only at the very end of the game.  It returns the total score for that game.
+
+VALID
+PRE
+game.roll(1)
+ACTION
+game.score()
+POST
+game score value = 1
+
+INVALID
+to simplify each invalid arg (number of pin greater that 10 will be set to ten by default)
+ACTION
+game.roll(11)
+POST
+game.score() == 10
+game score value = 10
+
+INVALID
+to simplify each invalid arg (number of pin greater that 10 will be set to ten by default)
+ACTION
+game.roll(-1)
+POST
+game.score() == 0
+game score value = 0
+
+VALID
+PRE
+game.roll(1)
+ACTION
+game.roll(4)
+POST
+game.score() == 5
+game score value = 5
+
+INVALID
+to simplify each invalid arg
+(summed number of pin greater that 10 will be set to ten by default
+- if the first >= 10 -> strike
+- if the first + second >= 10 -> spare)
+PRE
+game.roll(4)
+ACTION
+game.roll(8)
+POST
+game.score() == 10
+game score value = 10
+
+VALID
+PRE
+game.roll(1)
+game.roll(4)
+ACTION
+game.roll(4)
+POST
+game.score() == 9
+game score value = 9
+
+VALID
+PRE
+game.roll(1)
+game.roll(4)
+game.roll(4)
+ACTION
+game.roll(5)
+POST
+game.score() == 14
+game score value = 14
+
+
+VALID
+The hypothesis is that the knoked pins after the spare are zero
+PRE
+game.roll(1)
+game.roll(4)
+//
+game.roll(4)
+game.roll(5)
+//
+game.roll(6)
+ACTION
+game.roll(4)
+POST
+game.score() == 5 + 9 + 10 = 24
+game score value = 24
+
+VALID
+PRE
+game.roll(1)
+game.roll(4)
+//
+game.roll(4)
+game.roll(5)
+//
+game.roll(6)
+game.roll(4)
+ACTION
+game.roll(4)
+POST
+game.score() == 5 + 9 + 10 + 5*2 = 34
+game score value = 34
