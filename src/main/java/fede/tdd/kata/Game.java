@@ -1,26 +1,18 @@
 package fede.tdd.kata;
 
-public class Game {
 
-    private static final int MAX_PINS = 10;
-    private static final int MIN_PINS = 0;
-    private int _score;
+public class Game {
+    private final FrameList _frameList;
 
     public Game() {
-        _score = 0;
+        _frameList = new FrameList();
     }
 
     public void roll(int i) {
-        int validScore = getValidScore(i);
-        _score += validScore;
+        _frameList.roll(i);
     }
-
 
     public int score() {
-        return _score;
-    }
-
-    private int getValidScore(int i) {
-        return Math.max(Math.min(MAX_PINS, i), MIN_PINS);
+        return _frameList.getScore();
     }
 }
