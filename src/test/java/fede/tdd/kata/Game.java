@@ -101,4 +101,40 @@ class GameTest {
 
         assertThat(game.score(), is(25));
     }
+
+    @Test
+    void lastFrameStrike() {
+        Game game = new Game();
+        game.roll(1);
+        game.roll(4);
+
+        game.roll(10);
+
+        assertThat(game.score(), is(15));
+    }
+
+    @Test
+    void computeBonusPointsStrikePartialFrame(){
+        Game game = new Game();
+        game.roll(1);
+        game.roll(4);
+        game.roll(10);
+
+        game.roll(2);
+
+        assertThat(game.score(), is(19));
+    }
+
+    @Test
+    void computeBonusPointsStrike(){
+        Game game = new Game();
+        game.roll(1);
+        game.roll(4);
+        game.roll(10);
+        game.roll(2);
+
+        game.roll(4);
+
+        assertThat(game.score(), is(27));
+    }
 }

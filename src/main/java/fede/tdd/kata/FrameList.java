@@ -48,6 +48,9 @@ public class FrameList {
             if(frame.isSpare() && index + 1 < frameSize) {
                 score += _frames.get(index+1).getSpareBonus();
             }
+            if(frame.isStrike() && index + 1 < frameSize) {
+                score += _frames.get(index+1).getStrikeBonus();
+            }
             score += frame.getScore();
         }
         return score;

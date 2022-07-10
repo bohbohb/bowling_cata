@@ -17,7 +17,7 @@ balls to complete the frame.  However no more than three balls can be rolled in
 tenth frame.
 
 
-CARD 1:
+CARD 1: As a User I want to know the score of a game computing spare bonuses
 SCENARIOS
 
 roll(pins : int) is called each time the player rolls a ball.  The argument is the number of pins knocked down.
@@ -90,7 +90,6 @@ POST
 game.score() == 14
 game score value = 14
 
-
 VALID
 The hypothesis is that the knoked pins after the spare are zero
 PRE
@@ -122,3 +121,33 @@ game.roll(4)
 POST
 game.score() == 5 + 9 + 10 + 5*2 = 34
 game score value = 34
+
+CARD 1: As a User I want to know the score of a game computing strike bonuses
+SCENARIOS
+
+VALID
+PRE
+game.roll(1)
+game.roll(4)
+
+ACTION
+game.roll(10)
+
+POST
+game.score() == 1 + 4 + 10 = 15
+game score value = 15
+
+VALID
+PRE
+game.roll(1)
+game.roll(4)
+game.roll(10)
+
+ACTION
+
+game.roll(2)
+game.roll(4)
+
+POST
+game.score() == 1 + 4 + 10 + 6 + 6 = 27
+game score value = 27
